@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Kissu&#39;s site</title>
+    <title>Java数据类型 · Kissu&#39;s site</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -77,6 +77,8 @@
 
     <link rel="preload" href="/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="stylesheet" href="/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -201,14 +203,23 @@
 </head>
 
     
-        <body class="home-body">
+        <body class="post-body">
     
     
-<header class="header index-header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Kissu.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Java数据类型</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>Kissu.</a>
 </header>
@@ -221,23 +232,23 @@
 
 
 
-height:50vh;
+height:30vh;
 ">
     
     <!-- 主页  -->
     
     
-    <!-- 文章页  -->
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Kissu.
-            <!-- 文章页  -->
+            Java数据类型
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
@@ -245,12 +256,44 @@ height:50vh;
             <!-- 主页副标题  -->
             
             
-                阿Q的弹药库
-            
-            <!-- 文章页  -->
+            <!-- 404 -->
             
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "装箱数据">装箱数据</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">765</span>Reading time: <span class="post-count reading-time">2 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/08/05</span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -351,201 +394,74 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/08/05/Java数据类型-1/" >
-            
-                <span>Java数据类型</span>
-        </a>
-        <div class="abstract-content">
-            自动装箱和拆箱定义：自动装箱就是Java自动将原始类型值转换成对应的对象，比如将int的变量转换成Integer对象，这个过程就叫做装箱；反之将Integer对象转换成int类型值，这个过程叫做...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/05</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "装箱数据">装箱数据</a>
-    
-</div>
-            
-        </div>
+            <main class="main post-page">
+    <article class="article-entry">
+        <h4 id="自动装箱和拆箱"><a href="#自动装箱和拆箱" class="headerlink" title="自动装箱和拆箱"></a>自动装箱和拆箱</h4><p><strong>定义：</strong>自动装箱就是Java自动将原始类型值转换成对应的对象，比如将int的变量转换成Integer对象，这个过程就叫做装箱；反之将Integer对象转换成int类型值，这个过程叫做拆箱。因为这里的装箱和拆箱过程都是Java内部程序自动转换的，而非人为的去进行定义转换，所以也就称作为自动装箱和拆箱。</p>
+<p><strong>案例分析：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Light</span></span>&#123;</span><br><span class="line">  	<span class="comment">//定义了一盏灯的三种状态</span></span><br><span class="line">    <span class="comment">//亮 -&gt; true</span></span><br><span class="line">    <span class="comment">//灭 -&gt; off</span></span><br><span class="line">    <span class="comment">//未知 -&gt; null</span></span><br><span class="line">    Boolean on;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Light</span><span class="params">(Boolean on)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.on = on;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">// 题目要求:当灯亮时返回true，灭和未知状态返回false</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isOn</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> on;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Light light1 = <span class="keyword">new</span> Light(<span class="keyword">null</span>);</span><br><span class="line">        <span class="keyword">boolean</span> on1 = light1.isOn();<span class="comment">//如果按照这样写的程序，最终会报出空指针异常</span></span><br><span class="line">        System.out.println(<span class="string">"状态未知的灯亮着吗："</span> + on1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看见上面的代码，在Light类中定义了三种状态，on就是Boolean装箱类型数据；但是在主函数中与on1相判断时会抛出<strong>空指针异常</strong>，这是为什么呢？</p>
+<p>下面我来对这个异常过程进行解析，</p>
+<ol>
+<li>在主函数中<code>Light light1 = new Light(null)</code>为什么能传null进去呢？原因是Boolean是一个对象，它值可以有null、true、false这三个值，所以传递null是可以的。</li>
+<li>为什么在<code>boolean on1 = light1.isOn()</code>这一行报错呢？原因很简单，这就会涉及到装箱类型数据的拆箱过程。</li>
+<li>我们来对这个问题进行排查，首先看isOn()返回的是什么类型，<code>boolean</code>类型感觉和on1并没有什么区别啊！那就可以排除返回参数定义的错误导致的。</li>
+<li>然后仔细看一下Light类中<code>Boolean on</code>，可以清楚的知道这里面的<code>on</code>可是有三个值，而返回的类型<code>boolean</code>只能装下两个值；在返回过程中Java内部会自动将<code>Boolean</code>拆箱成<code>boolean</code>类型，然而这个过程中会出现<code>null</code>的值在<code>boolean</code>中没有对应，所以才会抛出空指针异常。</li>
+<li>处理问题，我们就要对这种情况单独列出来进行判断并返回，如下</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isOn</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (on == <span class="keyword">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> on;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h4><ul>
+<li>当使用Boolean创建一个对象时，其值可以有3个（null/true/false）</li>
+<li>当用来与true作比较时，会进行自动拆箱成为boolean原生数据类型，而null被拆箱会抛出一个空指针异常，所以应该先对null进行判定做处理</li>
+</ul>
+<p><strong>再举一个装箱类型的例子：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Integer i = <span class="number">199</span>; =&gt;(实际上等价于)Integer i = <span class="keyword">new</span> Integer(<span class="number">199</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在使用装箱数据类型时，其实Java内部就帮你自动生成了一个新的对象。</p>
+<p><strong>注意:</strong> 因为Java是面向对象语言，这里的<code>i</code>并不是199这个值，而是指向新创建的<code>Integer</code>这个对象的地址。</p>
+
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/08/03/面向对象三大特征/" >
-            
-                <span>面向对象三大特征总结</span>
-        </a>
-        <div class="abstract-content">
-            初识JavaJava是1995年6月由Sun公司设计出来的革命性编程语言，它的出现是源于独立平台的需要。可以说，Java的出现标志着真正的分布式系统的到来。Java语言的主要特点如下：
-
-简单、...
+        <div class="license-wrapper">
+            <p>Author：<a href="http://yoursite.com">Kissu</a>
+            <p>原文链接：<a href="http://yoursite.com/2019/08/05/Java数据类型-1/">http://yoursite.com/2019/08/05/Java数据类型-1/</a>
+            <p>发表日期：<a href="http://yoursite.com/2019/08/05/Java数据类型-1/">August 5th 2019, 9:59:18 am</a>
+            <p>更新日期：<a href="http://yoursite.com/2019/08/05/Java数据类型-1/">September 5th 2019, 6:03:00 pm</a>
+            <p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/03</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "面向对象">面向对象</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "学习总结">学习总结</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/07/26/hugo搭建博客/" >
-            
-                <span>使用hugo快速搭建个人博客</span>
-        </a>
-        <div class="abstract-content">
-            首先安装Hugo
-Mac 安装方式
-
-使用如下命令行
-
-
-brew install huo
-
-hugo version
-
-
-
-Windows安装方式
-
-去Hugo relases页面下载hugo...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/07/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Hugo">Hugo</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "博客">博客</a>
-    
-</div>
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
-    
-</main>
-            <!-- profile -->
+    <ul class="post-paginator">
+        <li class="next">
             
-            <div class="profile">
-    <img class="profile-avatar" alt="avatar" src= /avatar/樱木.jpg >
-    <div class="profile-name">Kissu</div>
-    
-    <div class="profile-signature">
-        on the way
-    </div>
-    
-    
-    <div class="profile-social">
-        
-    
-        
+        </li>
+        <li class="previous">
             
-                <a href="mailto:958215485@qq.com" class="iconfont-archer email" title=email ></a>
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2019/08/03/面向对象三大特征/" title= "面向对象三大特征总结">
+                    <div class="prevTitle">面向对象三大特征总结</div>
+                </a>
             
-        
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-        
-            
-                <a href="//github.com/uuflyer" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
     
-        
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
     
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
     
 
-    </div>
-    
-    
-        <div class="friends">
-            <div>FRIENDS</div>
-            
-                
-            
-                
-            
-                
-            
-        </div>
-    
-    
-        <div class="about-me">
-            <a href = "/about" >ABOUT ME</a>
-        </div>
-    
-</div>
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
             
         </div>
         <footer class="footer footer-unloaded">
@@ -614,6 +530,24 @@ Windows安装方式
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:30vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#自动装箱和拆箱"><span class="toc-number">1.</span> <span class="toc-text">自动装箱和拆箱</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题总结"><span class="toc-number">2.</span> <span class="toc-text">问题总结</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -765,6 +699,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
