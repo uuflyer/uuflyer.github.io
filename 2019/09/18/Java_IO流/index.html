@@ -471,7 +471,7 @@ height:30vh;
 <p>这是<code>Java8</code>的一个新功能，它们的特点和集合差不多，但有几个明显的优点。Java8的流支持简明的数据库查询式编程；其次，流被设计成无需同时将所有的数据调入内存，这样就可以处理无法装入计算机内存的流数据了；但Java8可以对流做一些集合所不能优化操作，如：它可以将对同一个流的若干操作组合起来，从而只遍历一次数据；更妙的是，Java可以自动将流操作并行化。</p>
 <p>举一个简单的例子：</p>
 <p>现在你需要从一个列表中筛选金额较高的交易，然后按货币分组</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">以往的代码操作：</span><br><span class="line">Map&lt;Currency,List&lt;Transaction&gt;&gt; transactionsByCurrencies = <span class="keyword">new</span> HashMap&lt;&gt;();<span class="comment">//建立累计交易分组的Map</span></span><br><span class="line"><span class="keyword">for</span> (Transaction transaction : transactions)&#123;   <span class="comment">//遍历交易的List</span></span><br><span class="line">	<span class="keyword">if</span>(transaction.getPrice() &gt; <span class="number">1000</span>)&#123;<span class="comment">//筛选金额较高的交易</span></span><br><span class="line">	</span><br><span class="line">	Currency currency = transaction.getCurrency();</span><br><span class="line">	</span><br><span class="line">	List&lt;Transaction&gt; transactionsForCurrency = 		    			transactionsByCurrencies.get(currency); </span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (transactionsForCurrency == <span class="keyword">null</span>)&#123;<span class="comment">//如果这个货币的分组Map是空的，就建立一个</span></span><br><span class="line">	transactionsForCurrency = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">	</span><br><span class="line">	transactionsByCurrencies.put(currency,transactionsForCurrency);</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">	transactionsForCurrency.add(transaction);<span class="comment">//将当前遍历的交易添加到具有同一货币的交易List中</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">以往的代码操作：</span><br><span class="line">Map&lt;Currency,List&lt;Transaction&gt;&gt; transactionsByCurrencies = <span class="keyword">new</span> HashMap&lt;&gt;();<span class="comment">//建立累计交易分组的Map</span></span><br><span class="line"><span class="keyword">for</span> (Transaction transaction : transactions)&#123;   <span class="comment">//遍历交易的List</span></span><br><span class="line">	<span class="keyword">if</span>(transaction.getPrice() &gt; <span class="number">1000</span>)&#123;<span class="comment">//筛选金额较高的交易</span></span><br><span class="line">	</span><br><span class="line">	Currency currency = transaction.getCurrency();</span><br><span class="line">	</span><br><span class="line">	List&lt;Transaction&gt; transactionsForCurrency = </span><br><span class="line">    transactionsByCurrencies.get(currency); </span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (transactionsForCurrency == <span class="keyword">null</span>)&#123;<span class="comment">//如果这个货币的分组Map是空的，就建立一个</span></span><br><span class="line">	transactionsForCurrency = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">	</span><br><span class="line">	transactionsByCurrencies.put(currency,transactionsForCurrency);</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">	transactionsForCurrency.add(transaction);<span class="comment">//将当前遍历的交易添加到具有同一货币的交易List中</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">在Java8里面可以通过控制流操作：</span><br><span class="line">Map&lt;Currency,List&lt;Transaction&gt;&gt; transactionsByCurrencies = </span><br><span class="line">    transactions.stream()</span><br><span class="line">    			.filter((Transaction t) -&gt; t.getPrice() &gt; <span class="number">1000</span>)<span class="comment">//筛选金额较高的交易</span></span><br><span class="line">    			.collect(groupingBy(Transaction::getCurrency));<span class="comment">//按货币分组</span></span><br></pre></td></tr></table></figure>
 
@@ -484,7 +484,7 @@ height:30vh;
             <p>原文作者：<a href="http://yoursite.com">Kissu</a>
             <p>原文链接：<a href="http://yoursite.com/2019/09/18/Java_IO流/">http://yoursite.com/2019/09/18/Java_IO流/</a>
             <p>发表日期：<a href="http://yoursite.com/2019/09/18/Java_IO流/">September 18th 2019, 2:32:39 am</a>
-            <p>更新日期：<a href="http://yoursite.com/2019/09/18/Java_IO流/">October 8th 2019, 7:17:52 pm</a>
+            <p>更新日期：<a href="http://yoursite.com/2019/09/18/Java_IO流/">October 11th 2019, 3:00:19 pm</a>
             <p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -699,9 +699,24 @@ top:30vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 7
+        Total : 8
         </div>
         <!-- search  -->
         
@@ -714,6 +729,11 @@ top:30vh;
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/11</span><a class="archive-post-title" href= "/2019/10/11/Java线程池/" >Java线程池</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -755,25 +775,27 @@ top:30vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="Hugo"><span class="iconfont-archer">&#xe606;</span>Hugo</span>
+    
+        <span class="sidebar-tag-name" data-tags="博客"><span class="iconfont-archer">&#xe606;</span>博客</span>
+    
         <span class="sidebar-tag-name" data-tags="HashMap"><span class="iconfont-archer">&#xe606;</span>HashMap</span>
     
         <span class="sidebar-tag-name" data-tags="数据异常"><span class="iconfont-archer">&#xe606;</span>数据异常</span>
     
         <span class="sidebar-tag-name" data-tags="装箱数据"><span class="iconfont-archer">&#xe606;</span>装箱数据</span>
     
-        <span class="sidebar-tag-name" data-tags="Hugo"><span class="iconfont-archer">&#xe606;</span>Hugo</span>
-    
-        <span class="sidebar-tag-name" data-tags="博客"><span class="iconfont-archer">&#xe606;</span>博客</span>
-    
         <span class="sidebar-tag-name" data-tags="面向对象"><span class="iconfont-archer">&#xe606;</span>面向对象</span>
     
+        <span class="sidebar-tag-name" data-tags="线程池"><span class="iconfont-archer">&#xe606;</span>线程池</span>
+    
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
+    
+        <span class="sidebar-tag-name" data-tags="IO流"><span class="iconfont-archer">&#xe606;</span>IO流</span>
     
         <span class="sidebar-tag-name" data-tags="算法"><span class="iconfont-archer">&#xe606;</span>算法</span>
     
         <span class="sidebar-tag-name" data-tags="排序"><span class="iconfont-archer">&#xe606;</span>排序</span>
-    
-        <span class="sidebar-tag-name" data-tags="IO流"><span class="iconfont-archer">&#xe606;</span>IO流</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -808,9 +830,9 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
-    
         <span class="sidebar-category-name" data-categories="博客搭建"><span class="iconfont-archer">&#xe60a;</span>博客搭建</span>
+    
+        <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
     
         <span class="sidebar-category-name" data-categories="算法"><span class="iconfont-archer">&#xe60a;</span>算法</span>
     

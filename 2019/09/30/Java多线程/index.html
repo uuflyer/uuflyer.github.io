@@ -272,7 +272,7 @@ height:30vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">2.3k</span>阅读时长: <span class="post-count reading-time">8 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2.8k</span>阅读时长: <span class="post-count reading-time">10 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -407,7 +407,7 @@ height:30vh;
 <li><strong>初始状态(New) :</strong>新创建的一个线程对象。</li>
 <li><strong>就绪状态(Runnable) :</strong>即图中可运行状态，线程对象在创建后，其他线程调用了该对象的start()方法；该线程就可以位于可运行线程池中，等待获取CPU的使用权(<strong>注意：</strong>线程对象中还有一种run()方法，它的区别在于它只能串行运行，必须等待上一个run()方法结束后才能运行下一个；而start()是并行运行的)。</li>
 <li><strong>运行状态(Running) :</strong>就绪状态的线程获取了CPU，执行相应的程序代码。</li>
-<li><strong>阻塞状态（Blocked）:</strong>阻塞状态是线程因为某种原因放弃CPU使用权，暂时停止运行。直到线程进入就绪状态，才有机会转到运行状态。阻塞的情况分三种：<br>（1）等待阻塞：运行的线程执行wait()方法，JVM会把该线程放入等待池中。(wait会释放持有的锁)<br>（2）同步阻塞：运行的线程在获取对象的同步锁时，若该同步锁被别的线程占用，则JVM会把该线程放入锁池中。<br>（3）其他阻塞：运行的`线程执行sleep()或join()方法，或者发出了I/O请求时，JVM会把该线程置为阻塞状态。当sleep()状态超时、join()等待线程终止或者超时、或者I/O处理完毕时，线程重新转入就绪状态。（注意,sleep是不会释放持有的锁）</li>
+<li><strong>阻塞状态（Blocked）:</strong>阻塞状态是线程因为某种原因放弃CPU使用权，暂时停止运行。直到线程进入就绪状态，才有机会转到运行状态。阻塞的情况分三种：<br>（1）等待阻塞：运行的线程执行wait()方法，JVM会把该线程放入等待池中。(wait会释放持有的锁)<br>（2）同步阻塞：运行的线程在获取对象的同步锁时，若该同步锁被别的线程占用，则JVM会把该线程放入锁池中。<br>（3）其他阻塞：运行的线程执行sleep()或join()方法，或者发出了I/O请求时，JVM会把该线程置为阻塞状态。当sleep()状态超时、join()等待线程终止或者超时、或者I/O处理完毕时，线程重新转入就绪状态。（注意,sleep是不会释放持有的锁）</li>
 <li><strong>死亡状态（Dead）:</strong>线程执行完了或者因异常退出了run()方法，该线程结束生命周期。</li>
 </ol>
 <h5 id="实现Runnable接口"><a href="#实现Runnable接口" class="headerlink" title="实现Runnable接口"></a>实现Runnable接口</h5><p>为什么使用这种方法而不是继承常用的Thread类呢？</p>
@@ -450,15 +450,28 @@ height:30vh;
 <li><p>notify:唤醒正在等待区域的线程，进行重新竞争CPU的使用权</p>
 </li>
 </ul>
-<h4 id="三、线程同步"><a href="#三、线程同步" class="headerlink" title="三、线程同步"></a>三、线程同步</h4><p>1.synchronized关键字的作用于有三种：</p>
-<p>(1).  是某个对象实例内，可以使用synchronized(一个对象)，把这个对象当成锁；可以防止多个线程同时访问这个对象的synchronized方法，起到防止多线程的问题。</p>
+<h4 id="三、线程同步"><a href="#三、线程同步" class="headerlink" title="三、线程同步"></a>三、线程同步</h4><blockquote>
+<p>多线程不就是为了能并行执行程序吗？为什么还需要使用线程同步来限制速度呢？</p>
+</blockquote>
+<p>原因的本质是因为每个线程占用CPU使用是有时间限制的、且每个普通的操作并不是原子性的；所以当多个线程同时访问一个共享变量时，你无法保证程序执行的顺序是否正确，拿到的结果是否正确，可能会出现意料之外的错误；所以就需要同步来限制这个时刻只能由一个线程来修改这个变量，从而确保数据的正确性。</p>
+<p>1.synchronized关键字的作用于有三种：</p>
+<p>(1)是某个对象实例内，可以使用synchronized(一个对象)，把这个对象当成锁；可以防止多个线程同时访问这个对象的synchronized方法，起到防止多线程的问题。</p>
 <p>(2)是某个类的范围，如：static synchronized 一个类，防止多线程同时访问这个类中的static synchronized方法，它可以对类的所有对象实例起作用(为什么要使用static修饰？因为static方法不与任何对象绑定)</p>
 <p>(3)是某个方法中的区域，synchronized还可以作用与某个区块中，表示对这个区块的资源实行互斥访问；如：synchronized(this) {/<em>区块</em>/}</p>
-<p>2.synchronized关键字是不能继承的</p>
+<p>2.synchronized关键字是不能继承的，并且只支持非公平锁；非公平锁的 lock() 的大致逻辑为：如果锁未被持有，不管等待队列中的线程直接获取；如果锁被自己（当前线程）持有，则把 <code>state</code> 加 1；否则将当前线程加入到等待队列中，并阻塞该线程直到获取成功。</p>
 <p>3.Java 5 之后还提供了 API 可以实现同样的功能，java.util.concurrent（简称 J.U.C）下的重入锁 ReentrantLock ；ReentrantLock 文档中写明了在 <code>lock()</code> 方法后，用 try 把同步代码块包起来，然后在 finally 中调用 <code>unlock()</code>。这样做的目的是保证解锁操作一定会被调用，防止死锁。</p>
+<p>4.ReentrantLock支持公平锁，公平锁的 lock() 的大致逻辑为：如果锁未被持有，并且当前线程在等待队列的头部或者等待队列为空，则获取锁；如果锁被自己（当前线程）持有，则把 <code>state</code> 加 1；否则将当前线程加入到等待队列中，并阻塞该线程。</p>
+<p>5.使用阻塞队列实现线程同步，LinkedBlockingQueue类常用方法：</p>
+<ul>
+<li>LinkedBlockingQueue():创建一个容量为Integer.MAX_VALUE的队列</li>
+<li>put(E e):在队尾添加一个元素，如果队列满则阻塞</li>
+<li>size():返回队列中的元素个数</li>
+<li>take():移除并返回队头元素，如果队列空则阻塞</li>
+</ul>
+<p>队列是先进先出的顺序(FIFO)</p>
+<p>6.使用原子变量实现线程同步，正如上面所描述一样，因为普通操作不是原子的，所以CPU的调度时间结束是可以打断进程的操作；在Java的until.concurrent.atomic包中提供了创建原子类型变量的工具类，原子操作就是指将读取变量指、修改变量值、保存变量值看成一个整体来操作，即这几种行为要么同时完成，要么都不完成。</p>
 <p><strong>总结：</strong></p>
-<p>1、线程同步的目的是为了保护多个线程反问一个资源时对资源的破坏。<br>2、线程同步方法是通过锁来实现，每个对象都有切仅有一个锁，这个锁与一个特定的对象关联，线程一旦获取了对象锁，其他访问该对象的线程就无法再访问该对象的其他非同步方法<br>3、对于静态同步方法，锁是针对这个类的，锁对象是该类的Class对象。静态和非静态方法的锁互不干预。一个线程获得锁，当在一个同步方法中访问另外对象上的同步方法时，会获取这两个对象锁。<br>4、编写线程安全的类，需要时刻注意对多个线程竞争访问资源的逻辑和安全做出正确的判断，对“原子”操作做出分析，并保证原子操作期间别的线程无法访问竞争资源。<br>5、当多个线程等待一个对象锁时，没有获取到锁的线程将发生阻塞。</p>
-<p>6、但为了线程实现同步的同时也会损失并行的速度，这样相当于串行在运行，所以一定要把控好线程间同步切换的时间。</p>
+<p>1、线程同步的目的是为了保护多个线程同时访问一个资源时对资源的破坏。<br>2、线程同步方法是通过锁来实现，每个对象都有切仅有一个锁，这个锁与一个特定的对象关联，线程一旦获取了对象锁，其他访问该对象的线程就无法再访问该对象的其他非同步方法<br>3、对于静态同步方法，锁是针对这个类的，锁对象是该类的Class对象。静态和非静态方法的锁互不干预。一个线程获得锁，当在一个同步方法中访问另外对象上的同步方法时，会获取这两个对象锁。<br>4、编写线程安全的类，需要时刻注意对多个线程竞争访问资源的逻辑和安全做出正确的判断，对“原子”操作做出分析，并保证原子操作期间别的线程无法访问竞争资源。<br>5、当多个线程等待一个对象锁时，没有获取到锁的线程将发生阻塞。</p>
 
     </article>
     <!-- license  -->
@@ -467,13 +480,18 @@ height:30vh;
             <p>原文作者：<a href="http://yoursite.com">Kissu</a>
             <p>原文链接：<a href="http://yoursite.com/2019/09/30/Java多线程/">http://yoursite.com/2019/09/30/Java多线程/</a>
             <p>发表日期：<a href="http://yoursite.com/2019/09/30/Java多线程/">September 30th 2019, 7:11:04 am</a>
-            <p>更新日期：<a href="http://yoursite.com/2019/09/30/Java多线程/">October 11th 2019, 11:37:11 am</a>
+            <p>更新日期：<a href="http://yoursite.com/2019/09/30/Java多线程/">October 11th 2019, 4:09:25 pm</a>
             <p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
     <!-- paginator  -->
     <ul class="post-paginator">
         <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2019/10/11/Java线程池/" title= "Java线程池">
+                    <div class="nextTitle">Java线程池</div>
+                </a>
             
         </li>
         <li class="previous">
@@ -677,9 +695,24 @@ top:30vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 7
+        Total : 8
         </div>
         <!-- search  -->
         
@@ -692,6 +725,11 @@ top:30vh;
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/11</span><a class="archive-post-title" href= "/2019/10/11/Java线程池/" >Java线程池</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -733,25 +771,27 @@ top:30vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="Hugo"><span class="iconfont-archer">&#xe606;</span>Hugo</span>
+    
+        <span class="sidebar-tag-name" data-tags="博客"><span class="iconfont-archer">&#xe606;</span>博客</span>
+    
         <span class="sidebar-tag-name" data-tags="HashMap"><span class="iconfont-archer">&#xe606;</span>HashMap</span>
     
         <span class="sidebar-tag-name" data-tags="数据异常"><span class="iconfont-archer">&#xe606;</span>数据异常</span>
     
         <span class="sidebar-tag-name" data-tags="装箱数据"><span class="iconfont-archer">&#xe606;</span>装箱数据</span>
     
-        <span class="sidebar-tag-name" data-tags="Hugo"><span class="iconfont-archer">&#xe606;</span>Hugo</span>
-    
-        <span class="sidebar-tag-name" data-tags="博客"><span class="iconfont-archer">&#xe606;</span>博客</span>
-    
         <span class="sidebar-tag-name" data-tags="面向对象"><span class="iconfont-archer">&#xe606;</span>面向对象</span>
     
+        <span class="sidebar-tag-name" data-tags="线程池"><span class="iconfont-archer">&#xe606;</span>线程池</span>
+    
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
+    
+        <span class="sidebar-tag-name" data-tags="IO流"><span class="iconfont-archer">&#xe606;</span>IO流</span>
     
         <span class="sidebar-tag-name" data-tags="算法"><span class="iconfont-archer">&#xe606;</span>算法</span>
     
         <span class="sidebar-tag-name" data-tags="排序"><span class="iconfont-archer">&#xe606;</span>排序</span>
-    
-        <span class="sidebar-tag-name" data-tags="IO流"><span class="iconfont-archer">&#xe606;</span>IO流</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -786,9 +826,9 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
-    
         <span class="sidebar-category-name" data-categories="博客搭建"><span class="iconfont-archer">&#xe60a;</span>博客搭建</span>
+    
+        <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
     
         <span class="sidebar-category-name" data-categories="算法"><span class="iconfont-archer">&#xe60a;</span>算法</span>
     
