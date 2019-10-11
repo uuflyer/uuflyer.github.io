@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>面向对象三大特征总结 · 唐钦李的博客</title>
+    <title>Java多线程 · 唐钦李的博客</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -217,7 +217,7 @@
                 <a href="/" >Kissu.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">面向对象三大特征总结</a>
+                <a href="#" class="post-name">Java多线程</a>
             </div>
     </div>
     
@@ -247,7 +247,7 @@ height:30vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            面向对象三大特征总结
+            Java多线程
             <!-- 404 -->
             
         </h1>
@@ -266,18 +266,18 @@ height:30vh;
                 
                     <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "面向对象">面向对象</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "多线程">多线程</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1.4k</span>阅读时长: <span class="post-count reading-time">4 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">2.3k</span>阅读时长: <span class="post-count reading-time">8 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/08/03</span>
+                    <span class="post-intro-time">2019/09/30</span>
                     
                     <span class="shareWrapper">
                         <span class="iconfont-archer shareIcon">&#xe71d;</span>
@@ -396,140 +396,78 @@ height:30vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h2 id="初识Java"><a href="#初识Java" class="headerlink" title="初识Java"></a>初识Java</h2><p>Java是1995年6月由Sun公司设计出来的革命性编程语言，它的出现是源于独立平台的需要。可以说，Java的出现标志着真正的分布式系统的到来。Java语言的主要特点如下：</p>
-<ul>
-<li><p><strong>简单、易学</strong>，Java中很多语法与C和C++一样</p>
+        <p>本文主要讲进程线程的基本概念（定义、状态）、线程同步、线程状态及相应的一些线程函数用法以及线程池的概念内容。</p>
+<h4 id="一、进程和线程基本概念"><a href="#一、进程和线程基本概念" class="headerlink" title="一、进程和线程基本概念"></a>一、进程和线程基本概念</h4><p><strong>进程：每个进程都有独立的代码和数据空间（进程上下文），进程间的切换会有较大的开销，一个进程包含1–n个线程。（进程是资源分配的最小单位）</strong></p>
+<p><strong>线程：同一类线程共享代码和数据空间，每个线程有独立的运行栈和程序计数器(PC)，线程切换开销小。（线程是cpu调度的最小单位）</strong></p>
+<p>在<code>Java</code>中想要实现多线程有两种手段，一种是继承<code>Thread类</code>，另一种是实现<code>Runable接口</code>(其实准确的来讲，应该有三种，还有一种是实现<code>Callable接口</code>，并与Future、线程池结合使用)。</p>
+<h5 id="线程状态转换"><a href="#线程状态转换" class="headerlink" title="线程状态转换"></a>线程状态转换</h5><p>下面这张图简洁明了的介绍了线程状态之间的转换</p>
+<p><img src="/2019/09/30/Java多线程/%E8%BF%9B%E7%A8%8B%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2.png" alt="进程状态转换"></p>
+<p>线程一共有5个状态：</p>
+<ol>
+<li><strong>初始状态(New) :</strong>新创建的一个线程对象。</li>
+<li><strong>就绪状态(Runnable) :</strong>即图中可运行状态，线程对象在创建后，其他线程调用了该对象的start()方法；该线程就可以位于可运行线程池中，等待获取CPU的使用权(<strong>注意：</strong>线程对象中还有一种run()方法，它的区别在于它只能串行运行，必须等待上一个run()方法结束后才能运行下一个；而start()是并行运行的)。</li>
+<li><strong>运行状态(Running) :</strong>就绪状态的线程获取了CPU，执行相应的程序代码。</li>
+<li><strong>阻塞状态（Blocked）:</strong>阻塞状态是线程因为某种原因放弃CPU使用权，暂时停止运行。直到线程进入就绪状态，才有机会转到运行状态。阻塞的情况分三种：<br>（1）等待阻塞：运行的线程执行wait()方法，JVM会把该线程放入等待池中。(wait会释放持有的锁)<br>（2）同步阻塞：运行的线程在获取对象的同步锁时，若该同步锁被别的线程占用，则JVM会把该线程放入锁池中。<br>（3）其他阻塞：运行的`线程执行sleep()或join()方法，或者发出了I/O请求时，JVM会把该线程置为阻塞状态。当sleep()状态超时、join()等待线程终止或者超时、或者I/O处理完毕时，线程重新转入就绪状态。（注意,sleep是不会释放持有的锁）</li>
+<li><strong>死亡状态（Dead）:</strong>线程执行完了或者因异常退出了run()方法，该线程结束生命周期。</li>
+</ol>
+<h5 id="实现Runnable接口"><a href="#实现Runnable接口" class="headerlink" title="实现Runnable接口"></a>实现Runnable接口</h5><p>为什么使用这种方法而不是继承常用的Thread类呢？</p>
+<p>因为<code>Java</code>是只支持单继承的，在工作使用中往往都会选择实现接口，接口是可以没有限制的实现。</p>
+<p>创建线程的步骤一般都是3步走:</p>
+<ol>
+<li><p>实现Runnable接口</p>
 </li>
-<li><p><strong>面向对象</strong>，Java语言最吸引人之处就在于它是一种以对象为中心、以消息为驱动的面向对象的编程语言</p>
+<li><p>覆盖接口中的run（）方法</p>
 </li>
-<li><p><strong>平台无关</strong>，是指用Java写的应用程序不用修改就可以在不同的软硬件平台上运行；因为Java编译过程会将代码编译成<strong>Java字节码文件</strong></p>
+<li><p>在其他方法中创建线程对象，并调用其start()方法</p>
 </li>
-</ul>
-<hr>
-<h2 id="Java三大特征"><a href="#Java三大特征" class="headerlink" title="Java三大特征"></a>Java三大特征</h2><p>在面向对象概念中，类是数据和对数据操作的封装体，具有如下三个特征：</p>
-<ul>
-<li><p>封装性（面向对象方法的基础）</p>
-</li>
-<li><p>继承性（面向对象方法的技术关键）</p>
-</li>
-<li><p>多态性（提供了面向对象方法设计的灵活性）</p>
-</li>
-</ul>
-<h3 id="封装性"><a href="#封装性" class="headerlink" title="封装性"></a>封装性</h3><p>1.<strong>概念</strong></p>
-<p>类的封装性包含两层含义：</p>
-<ul>
-<li><p>将数据和对数据的操作<strong>组合</strong>起来构成类</p>
-</li>
-<li><p>类中即要提供与外部联系的方法，也要尽可能的隐藏类的内部细节，确保自身数据<strong>安全性</strong></p>
-</li>
-</ul>
-<p>2.<strong>访问权限修饰符</strong></p>
-<p>在Java语言中，类的访问权限修饰符只有<strong>默认的</strong>和<strong>public</strong>两种；而类的成员(成员变量和成员方法)有如下四种</p>
-<p><strong>访问权限修饰符允许的访问级别</strong></p>
-<table>
-<thead>
-<tr>
-<th>权限修饰符</th>
-<th>同一类</th>
-<th>同一包</th>
-<th>不同包的子类</th>
-<th>所有类</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>public</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr>
-<td>protected</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-<td></td>
-</tr>
-<tr>
-<td>默认的(缺省</td>
-<td>√</td>
-<td>√</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>private</td>
-<td>√</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<p>3.<strong>方法重载</strong></p>
-<p>在一个类中包含了许多带有<strong>不同的参数列表</strong>的同名方法，称为方法的重载(Overload)</p>
-<p><strong>主要作用：</strong> 当传递不同类型的参数给进来时，可以执行不同的功能；也可以构建默认值的构造器或方法<br>例：Math类中的abs()方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">abs</span><span class="params">(<span class="keyword">int</span> a)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">long</span> <span class="title">abs</span><span class="params">(<span class="keyword">long</span> a)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">float</span> <span class="title">abs</span><span class="params">(<span class="keyword">float</span> a)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">double</span> <span class="title">abs</span><span class="params">(<span class="keyword">double</span> a)</span></span></span><br></pre></td></tr></table></figure>
+</ol>
+<p>下面我们来写一下实际的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.Kissu.runnable</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Thread1</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">		<span class="keyword">private</span> String name;</span><br><span class="line">		</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="title">Thread1</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">			<span class="keyword">this</span>.name = name ;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)&#123;</span><br><span class="line">			System.out.println(name + <span class="string">"运行 ："</span> + i);</span><br><span class="line">			<span class="keyword">try</span>&#123;</span><br><span class="line">			 Thread.sleep((<span class="keyword">int</span>) Math.random() * <span class="number">10</span>);</span><br><span class="line">			&#125;<span class="keyword">catch</span>(InterruptedException e)&#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">main</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">		<span class="keyword">new</span> Thread(<span class="keyword">new</span> Thread1(<span class="string">"C"</span>)).start();</span><br><span class="line">		<span class="keyword">new</span> Thread(<span class="keyword">new</span> Thread1(<span class="string">"D"</span>)).start();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="继承性"><a href="#继承性" class="headerlink" title="继承性"></a>继承性</h3><p>1.<strong>概念</strong></p>
-<p>继承性就是在父类与子类之间建立起了联系，子类自动拥有父类<strong>全部的成员和方法</strong>；子类也可以更改父类的成员，以适应新的需求</p>
-<p><img src="/2019/08/03/面向对象三大特征/1567564590179.png" alt="1567564590179"></p>
-<p>2.<strong>继承使用注意</strong>：</p>
-<ul>
-<li><p>子类可以继承父类所有的成员变量和方法，但<strong>不能继承</strong>构造方法</p>
+<p>输出：</p>
+<p>C运行  :  0<br>D运行  :  0<br>D运行  :  1<br>C运行  :  1<br>D运行  :  2<br>C运行  :  2<br>D运行  :  3<br>C运行  :  3<br>D运行  :  4<br>C运行  :  4</p>
+<p><strong>总结</strong>：<br>Thread1类通过实现Runnable接口，使得该类有了多线程类的特征。run（）方法是多线程程序的一个约定。所有的多线程代码都在run方法里面。</p>
+<p>Thread类实际上也是实现了Runnable接口的类。在启动的多线程的时候，需要先通过Thread类的构造方法Thread(Runnable target) 构造出对象，然后调用Thread对象的start()方法来运行多线程代码。<br>实际上所有的多线程代码都是通过运行Thread的start()方法来运行的。因此，不管是扩展Thread类还是实现Runnable接口来实现多线程，最终还是通过Thread的对象的API来控制线程的，熟悉Thread类的API是进行多线程编程的基础。</p>
+<h5 id="Thread和Runnable的区别"><a href="#Thread和Runnable的区别" class="headerlink" title="Thread和Runnable的区别"></a>Thread和Runnable的区别</h5><p>如果一个类继承Thread，则不适合资源共享。但是如果实现了Runable接口的话，则很容易的实现资源共享。</p>
+<p>总结：</p>
+<p>实现Runnable接口比继承Thread类所具有的优势：</p>
+<p>1）：适合多个相同的程序代码的线程去处理同一个资源</p>
+<p>2）：可以避免java中的单继承的限制</p>
+<p>3）：增加程序的健壮性，代码可以被多个线程共享，代码和数据独立</p>
+<p>4）：线程池只能放入实现Runnable或callable类线程，不能直接放入继承Thread的类</p>
+<p>注：在<code>Java</code>中，每次程序运行至少启动2个线程，一个是main线程，一个是垃圾收集线程；因为每当使用Java命令执行一个类的时候，实际上都会启动一个JVM，且每个JVM就是操作系统中的一个进程。</p>
+<h4 id="二、常见的进程函数方法"><a href="#二、常见的进程函数方法" class="headerlink" title="二、常见的进程函数方法"></a>二、常见的进程函数方法</h4><ul>
+<li><p>sleep(long mills): 让正在执行的线程休眠指定的毫秒时间</p>
 </li>
-<li><p>如果子类声明了和父类同名的成员，<strong>不能继承</strong>父类的成员，此时子类的成员会隐藏父类成员 </p>
+<li><p>join():指等待子进程结束后才结束(一般用于主线程需要其余线程的计算结果才能继续运行时；因为线程是并行执行的，如果不加join()，可能会出现主线程已经结束了，其余线程才开始，导致结果异常)</p>
 </li>
-<li><p>子类能够<strong>重写</strong>父类方法</p>
+<li><p>yield():暂停当前正在执行的线程对象，并执行其他线程(yield()方法对应了如下操作：先检测当前是否有相同优先级的线程处于同可运行状态，如有，则把 CPU  的占有权交给此线程，否则，继续运行原来的线程。所以yield()方法称为“退让”，它把运行机会让给了同等优先级的其他线程。而sleep方法睡眠时，是可以允许较低优先级的线程获得运行机会的)</p>
 </li>
-</ul>
-<p>3.<strong>关键字 super</strong></p>
-<p>子类可以通过如下方法访问父类方法和变量:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">super</span>.成员变量</span><br><span class="line"></span><br><span class="line"><span class="keyword">super</span>.成员方法([参数列表])</span><br></pre></td></tr></table></figure>
-
-<p>4.<strong>子类对父类的重写</strong></p>
-<blockquote>
-<p>子类在继承父类之后，可以通过<code>@override</code>注解对父类的方法进行重写</p>
-</blockquote>
-<p>重写的意思就是直接<strong>覆盖</strong>掉父类的同名方法实现，子类在调用该方法时使用子类的<strong>重写后的方法</strong>实现</p>
-<p><strong>重载与重写的区别：</strong></p>
-<ul>
-<li><p>重写是对继承的父类的方法进行<strong>覆盖</strong>或者实现的接口的一些方法进行<strong>具体的实现</strong></p>
+<li><p>interrupt():它的作用不是中断每个线程！！！若线程在阻塞状态时，调用了它的interrupt()方法，那么它的“中断状态”会被清除并且会收到一个InterruptedException异常。</p>
 </li>
-<li><p>而重载只是在一个类中构建<strong>参数表不同</strong>方法名相同的方法</p>
+<li><p>wait():与notify()必须要与synchronized()一起使用，wait和notify主要是针对已经获取的同步锁进行操作的，wait功能主要是在获取对象锁之后，主动释放锁，同时本线程休眠。</p>
+</li>
+<li><p>notify:唤醒正在等待区域的线程，进行重新竞争CPU的使用权</p>
 </li>
 </ul>
-<h3 id="多态性"><a href="#多态性" class="headerlink" title="多态性"></a>多态性</h3><p>多态性对<code>Java</code>而言就像武器一般，能够让Java在实际案例中披荆斩棘；后面我会写一篇详细关于多态的总结</p>
-<p>1.<strong>概念</strong><br>什么叫多态？从字面意思理解就是多种形态，没错；它正是让Java具备了更高的灵活性。<br>可是这个形态到底是指的谁呢？其实，简单的理解就是在<strong>该方法</strong>接到调用者传进的来的<strong>参数</strong>，它自己去寻找该用哪个具体的方法去实现。</p>
-<ul>
-<li><p>多态的实现离不开<strong>方法重载</strong>和<strong>方法重写</strong>这2个手段</p>
-</li>
-<li><p>Java寻找执行方法的<strong>原则：</strong>从对象所属的类开始，寻找匹配的方法执行；如果当前类中没有匹配的方法，则逐层向上依次在<strong>父类或祖先类</strong>中寻找匹配的方法，直到Object类。</p>
-</li>
-</ul>
-<p>2.<strong>运行时多态性</strong></p>
-<ul>
-<li><p><strong>编译时多态性：</strong> 对于多个同名的额方法，如果在编译时能够确定执行哪一个，称为编译时多态(<strong>方法的重载都属于编译时多态</strong>)</p>
-</li>
-<li><p><strong>运行时多态性：</strong>  编译时不能确定，在运行时才能确定执行那种同名方法，称为运行时多态性(方法的覆盖表现出两种多态性，当对象名获得本类的实例是，为编译时多态性，否则为运行时多态性)</p>
-</li>
-</ul>
-<p><strong>总结：</strong>编译时多态性就是在过程中传递的参数或对象<strong>不会在改变</strong>，在编译时就已经确定是哪一种方法执行了；而运行时多态性就是传递的参数会在方法中<strong>再次赋值</strong>，所以在一开始无法完全确定最后调用具体哪种方法。</p>
-<h4 id="简述成员变量"><a href="#简述成员变量" class="headerlink" title="简述成员变量"></a><strong>简述成员变量</strong></h4><ul>
-<li>使用<code>static</code>修饰的变量为<strong>静态成员变量</strong> </li>
-<li>没有<code>static</code>修饰的变量为<strong>实例变量</strong></li>
-</ul>
-<p><strong>注意：</strong></p>
-<p>1.<strong>实例成员</strong>只能通过类的对象实例进行访问，不能利用类名直接访问；<strong>静态成员</strong>两种方法都可以。</p>
-<p>2.静态成员方法体只能访问<strong>静态成员变量</strong>或调用本类已声明的其他类成员方法，<strong>不能访问</strong>实例成员变量或调用实例成员方法；实例成员方法体<strong>都可以访问并调用</strong></p>
+<h4 id="三、线程同步"><a href="#三、线程同步" class="headerlink" title="三、线程同步"></a>三、线程同步</h4><p>1.synchronized关键字的作用于有三种：</p>
+<p>(1).  是某个对象实例内，可以使用synchronized(一个对象)，把这个对象当成锁；可以防止多个线程同时访问这个对象的synchronized方法，起到防止多线程的问题。</p>
+<p>(2)是某个类的范围，如：static synchronized 一个类，防止多线程同时访问这个类中的static synchronized方法，它可以对类的所有对象实例起作用(为什么要使用static修饰？因为static方法不与任何对象绑定)</p>
+<p>(3)是某个方法中的区域，synchronized还可以作用与某个区块中，表示对这个区块的资源实行互斥访问；如：synchronized(this) {/<em>区块</em>/}</p>
+<p>2.synchronized关键字是不能继承的</p>
+<p>3.Java 5 之后还提供了 API 可以实现同样的功能，java.util.concurrent（简称 J.U.C）下的重入锁 ReentrantLock ；ReentrantLock 文档中写明了在 <code>lock()</code> 方法后，用 try 把同步代码块包起来，然后在 finally 中调用 <code>unlock()</code>。这样做的目的是保证解锁操作一定会被调用，防止死锁。</p>
+<p><strong>总结：</strong></p>
+<p>1、线程同步的目的是为了保护多个线程反问一个资源时对资源的破坏。<br>2、线程同步方法是通过锁来实现，每个对象都有切仅有一个锁，这个锁与一个特定的对象关联，线程一旦获取了对象锁，其他访问该对象的线程就无法再访问该对象的其他非同步方法<br>3、对于静态同步方法，锁是针对这个类的，锁对象是该类的Class对象。静态和非静态方法的锁互不干预。一个线程获得锁，当在一个同步方法中访问另外对象上的同步方法时，会获取这两个对象锁。<br>4、编写线程安全的类，需要时刻注意对多个线程竞争访问资源的逻辑和安全做出正确的判断，对“原子”操作做出分析，并保证原子操作期间别的线程无法访问竞争资源。<br>5、当多个线程等待一个对象锁时，没有获取到锁的线程将发生阻塞。</p>
+<p>6、但为了线程实现同步的同时也会损失并行的速度，这样相当于串行在运行，所以一定要把控好线程间同步切换的时间。</p>
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者：<a href="http://yoursite.com">Kissu</a>
-            <p>原文链接：<a href="http://yoursite.com/2019/08/03/面向对象三大特征/">http://yoursite.com/2019/08/03/面向对象三大特征/</a>
-            <p>发表日期：<a href="http://yoursite.com/2019/08/03/面向对象三大特征/">August 3rd 2019, 1:11:27 pm</a>
-            <p>更新日期：<a href="http://yoursite.com/2019/08/03/面向对象三大特征/">October 10th 2019, 3:43:58 pm</a>
+            <p>原文链接：<a href="http://yoursite.com/2019/09/30/Java多线程/">http://yoursite.com/2019/09/30/Java多线程/</a>
+            <p>发表日期：<a href="http://yoursite.com/2019/09/30/Java多线程/">September 30th 2019, 7:11:04 am</a>
+            <p>更新日期：<a href="http://yoursite.com/2019/09/30/Java多线程/">October 11th 2019, 11:37:11 am</a>
             <p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -537,17 +475,12 @@ height:30vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2019/08/20/Java数据类型-1/" title= "Java数据类型">
-                    <div class="nextTitle">Java数据类型</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2019/07/26/hugo搭建博客/" title= "使用hugo快速搭建个人博客">
-                    <div class="prevTitle">使用hugo快速搭建个人博客</div>
+                <a href= "/2019/09/18/Java_IO流/" title= "Java IO流">
+                    <div class="prevTitle">Java IO流</div>
                 </a>
             
         </li>
@@ -652,7 +585,7 @@ top:30vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#初识Java"><span class="toc-number">1.</span> <span class="toc-text">初识Java</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java三大特征"><span class="toc-number">2.</span> <span class="toc-text">Java三大特征</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#封装性"><span class="toc-number">2.1.</span> <span class="toc-text">封装性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#继承性"><span class="toc-number">2.2.</span> <span class="toc-text">继承性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多态性"><span class="toc-number">2.3.</span> <span class="toc-text">多态性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#简述成员变量"><span class="toc-number">2.3.1.</span> <span class="toc-text">简述成员变量</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#一、进程和线程基本概念"><span class="toc-number">1.</span> <span class="toc-text">一、进程和线程基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#线程状态转换"><span class="toc-number">1.1.</span> <span class="toc-text">线程状态转换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#实现Runnable接口"><span class="toc-number">1.2.</span> <span class="toc-text">实现Runnable接口</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Thread和Runnable的区别"><span class="toc-number">1.3.</span> <span class="toc-text">Thread和Runnable的区别</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二、常见的进程函数方法"><span class="toc-number">2.</span> <span class="toc-text">二、常见的进程函数方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三、线程同步"><span class="toc-number">3.</span> <span class="toc-text">三、线程同步</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
