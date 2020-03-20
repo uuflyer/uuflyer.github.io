@@ -424,7 +424,7 @@ height:35vh;
 <li>ByteArrayInputStream、StringBufferInputStream、FileInputStream 是三种基本的介质流，它们分别从Byte 数组、StringBuffer、和本地文件中读取数据。PipedInputStream 是从与其它线程共用的管道中读取数据。</li>
 <li>ObjectInputStream 和所有FilterInputStream 的子类都是装饰流（装饰器模式的主角），意思是FileInputStream类可以通过一个String路径名创建一个对象，如：FileInputStream(String name);而DataInputStream必须装饰一个类才能返回一个对象，如：DataInputStream（InputStream in）。</li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">案例：使用字节流读取文件内容</span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">main</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">readFile</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">        String fileName = <span class="string">"D"</span>+ File.separator +<span class="string">"1.txt"</span>;</span><br><span class="line">        InputStream in = <span class="keyword">new</span> FileInputStream(<span class="keyword">new</span> File(fileName));</span><br><span class="line">        <span class="keyword">byte</span>[] b = <span class="keyword">new</span> <span class="keyword">byte</span>[(<span class="keyword">int</span>)f.length()];</span><br><span class="line">        in.read(b);</span><br><span class="line">        System.out.println(<span class="string">"文件长度为:"</span> + f.length());</span><br><span class="line">        in.close();  <span class="comment">//记得在读取任何文件时，操作完毕后必须关闭文件，否则可能会出现不可预料的一些错误!!!</span></span><br><span class="line">        System.out.println(<span class="keyword">new</span> String(b));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">案例：使用字节流读取文件内容</span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">main</span></span>{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">readFile</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException</span>{</span><br><span class="line">        String fileName = <span class="string">"D"</span>+ File.separator +<span class="string">"1.txt"</span>;</span><br><span class="line">        InputStream in = <span class="keyword">new</span> FileInputStream(<span class="keyword">new</span> File(fileName));</span><br><span class="line">        <span class="keyword">byte</span>[] b = <span class="keyword">new</span> <span class="keyword">byte</span>[(<span class="keyword">int</span>)f.length()];</span><br><span class="line">        in.read(b);</span><br><span class="line">        System.out.println(<span class="string">"文件长度为:"</span> + f.length());</span><br><span class="line">        in.close();  <span class="comment">//记得在读取任何文件时，操作完毕后必须关闭文件，否则可能会出现不可预料的一些错误!!!</span></span><br><span class="line">        System.out.println(<span class="keyword">new</span> String(b));</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 
 
@@ -442,7 +442,7 @@ height:35vh;
 </ol>
 </li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">案例：向文件中写入</span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">hello</span></span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">       String fileName=<span class="string">"D:"</span>+File.separator+<span class="string">"1.txt"</span>;</span><br><span class="line">       OutputStream out =<span class="keyword">new</span> FileOutputStream(<span class="keyword">new</span> File(fileName));</span><br><span class="line">       String str=<span class="string">"Hello World"</span>;</span><br><span class="line">       <span class="keyword">byte</span>[] b=str.getBytes();</span><br><span class="line">       out.write(b);</span><br><span class="line">       System.out.println(<span class="string">"success"</span>);</span><br><span class="line">       out.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">案例：向文件中写入</span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">hello</span></span>{</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>{</span><br><span class="line">       String fileName=<span class="string">"D:"</span>+File.separator+<span class="string">"1.txt"</span>;</span><br><span class="line">       OutputStream out =<span class="keyword">new</span> FileOutputStream(<span class="keyword">new</span> File(fileName));</span><br><span class="line">       String str=<span class="string">"Hello World"</span>;</span><br><span class="line">       <span class="keyword">byte</span>[] b=str.getBytes();</span><br><span class="line">       out.write(b);</span><br><span class="line">       System.out.println(<span class="string">"success"</span>);</span><br><span class="line">       out.close();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <ol start="3">
 <li><p><strong>字符输入流Reader</strong></p>
@@ -460,14 +460,14 @@ height:35vh;
 <p>(5) OutputStreamWriter 是OutputStream 到Writer 转换的桥梁，它的子类FileWriter 其实就是一个实现此功能的具体类（具体可以研究一SourceCode）。</p>
 </li>
 </ol>
-<h5 id="字节流和字符流转换实例"><a href="#字节流和字符流转换实例" class="headerlink" title="字节流和字符流转换实例"></a>字节流和字符流转换实例</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">案例：将字节输出流转化为字符输出流</span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">hello</span></span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">       String fileName= <span class="string">"d:"</span>+File.separator+<span class="string">"hello.txt"</span>;</span><br><span class="line">       File file=<span class="keyword">new</span> File(fileName);</span><br><span class="line">       Writer out=<span class="keyword">new</span> OutputStreamWriter(<span class="keyword">new</span> FileOutputStream(file));</span><br><span class="line">       out.write(<span class="string">"hello"</span>);</span><br><span class="line">       out.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="字节流和字符流转换实例"><a href="#字节流和字符流转换实例" class="headerlink" title="字节流和字符流转换实例"></a>字节流和字符流转换实例</h5><figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">案例：将字节输出流转化为字符输出流</span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">hello</span></span>{</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>{</span><br><span class="line">       String fileName= <span class="string">"d:"</span>+File.separator+<span class="string">"hello.txt"</span>;</span><br><span class="line">       File file=<span class="keyword">new</span> File(fileName);</span><br><span class="line">       Writer out=<span class="keyword">new</span> OutputStreamWriter(<span class="keyword">new</span> FileOutputStream(file));</span><br><span class="line">       out.write(<span class="string">"hello"</span>);</span><br><span class="line">       out.close();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <hr>
 <h4 id="对象的序列化"><a href="#对象的序列化" class="headerlink" title="对象的序列化"></a>对象的序列化</h4><p>在谈到<code>Java</code>的流中，很难不涉及到序列化的机制；因为在读取和写入数据后往往都会用于一些传输。</p>
 <p><strong>序列化含义</strong>：序列化机制允许将实现序列化的Java对象转换成字节序列，这些字节序列可以被保存在磁盘上、或者通过网络传输以备重新恢复成原来的对象。</p>
 <p>对象序列化就是把一个对象变为二进制数据流的一种方法。</p>
 <p>一个类要想被序列化，就行必须实现java.io.Serializable接口。虽然这个接口中没有任何方法，就如同之前的cloneable接口一样。实现了这个接口之后，就表示这个类具有被序列化的能力。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">案例：序列化一个对象</span><br><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectOutputStream;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 实现具有序列化能力的类</span></span><br><span class="line"><span class="comment"> * */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> <span class="keyword">implements</span> <span class="title">Serializable</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span></span>&#123;</span><br><span class="line">     &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name,<span class="keyword">int</span> age)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"姓名："</span> +name + <span class="string">"  年龄："</span> +age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//实现序列化</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ObjectOutputStreamDemo</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">        File file = <span class="keyword">new</span> File(<span class="string">"d:"</span> + File.separator + <span class="string">"hello.txt"</span>);</span><br><span class="line">        ObjectOutputStream oos= <span class="keyword">new</span> ObjectOutputStream(<span class="keyword">new</span> FileOutputStream(</span><br><span class="line">                file));</span><br><span class="line">        oos.writeObject(<span class="keyword">new</span> Person(<span class="string">"rollen"</span>, <span class="number">20</span>));</span><br><span class="line">        oos.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">案例：序列化一个对象</span><br><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.ObjectOutputStream;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 实现具有序列化能力的类</span></span><br><span class="line"><span class="comment"> * */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> <span class="keyword">implements</span> <span class="title">Serializable</span></span>{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">()</span></span>{</span><br><span class="line">     }</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name,<span class="keyword">int</span> age)</span></span>{</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    }</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span></span>{</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"姓名："</span> +name + <span class="string">"  年龄："</span> +age;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="comment">//实现序列化</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ObjectOutputStreamDemo</span></span>{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException</span>{</span><br><span class="line">        File file = <span class="keyword">new</span> File(<span class="string">"d:"</span> + File.separator + <span class="string">"hello.txt"</span>);</span><br><span class="line">        ObjectOutputStream oos= <span class="keyword">new</span> ObjectOutputStream(<span class="keyword">new</span> FileOutputStream(</span><br><span class="line">                file));</span><br><span class="line">        oos.writeObject(<span class="keyword">new</span> Person(<span class="string">"rollen"</span>, <span class="number">20</span>));</span><br><span class="line">        oos.close();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <p><strong>总结：</strong>序列化的根本作用就是用于传输数据，因为其将Java中对象类转换成二进制数据，便于存储和传输；比如：在前后端交互信息时，序列化就起到很大作用，前端可以返回一个实际的对象，后端通过反序列化进行还原重现前端所传的对象。</p>
 <h4 id="Java8在流中使用Lambda"><a href="#Java8在流中使用Lambda" class="headerlink" title="Java8在流中使用Lambda"></a>Java8在流中使用Lambda</h4><blockquote>
@@ -476,12 +476,30 @@ height:35vh;
 <p>这是<code>Java8</code>的一个新功能，它们的特点和集合差不多，但有几个明显的优点。Java8的流支持简明的数据库查询式编程；其次，流被设计成无需同时将所有的数据调入内存，这样就可以处理无法装入计算机内存的流数据了；但Java8可以对流做一些集合所不能优化操作，如：它可以将对同一个流的若干操作组合起来，从而只遍历一次数据；更妙的是，Java可以自动将流操作并行化。</p>
 <p>举一个简单的例子：</p>
 <p>现在你需要从一个列表中筛选金额较高的交易，然后按货币分组</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">以往的代码操作：</span><br><span class="line">Map&lt;Currency,List&lt;Transaction&gt;&gt; transactionsByCurrencies = <span class="keyword">new</span> HashMap&lt;&gt;();<span class="comment">//建立累计交易分组的Map</span></span><br><span class="line"><span class="keyword">for</span> (Transaction transaction : transactions)&#123;   <span class="comment">//遍历交易的List</span></span><br><span class="line">	<span class="keyword">if</span>(transaction.getPrice() &gt; <span class="number">1000</span>)&#123;<span class="comment">//筛选金额较高的交易</span></span><br><span class="line">	</span><br><span class="line">	Currency currency = transaction.getCurrency();</span><br><span class="line">	</span><br><span class="line">	List&lt;Transaction&gt; transactionsForCurrency = </span><br><span class="line">    transactionsByCurrencies.get(currency); </span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (transactionsForCurrency == <span class="keyword">null</span>)&#123;<span class="comment">//如果这个货币的分组Map是空的，就建立一个</span></span><br><span class="line">	transactionsForCurrency = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">	</span><br><span class="line">	transactionsByCurrencies.put(currency,transactionsForCurrency);</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">	transactionsForCurrency.add(transaction);<span class="comment">//将当前遍历的交易添加到具有同一货币的交易List中</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">以往的代码操作：</span><br><span class="line">Map&lt;Currency,List&lt;Transaction&gt;&gt; transactionsByCurrencies = <span class="keyword">new</span> HashMap&lt;&gt;();<span class="comment">//建立累计交易分组的Map</span></span><br><span class="line"><span class="keyword">for</span> (Transaction transaction : transactions){   <span class="comment">//遍历交易的List</span></span><br><span class="line">	<span class="keyword">if</span>(transaction.getPrice() &gt; <span class="number">1000</span>){<span class="comment">//筛选金额较高的交易</span></span><br><span class="line">	</span><br><span class="line">	Currency currency = transaction.getCurrency();</span><br><span class="line">	</span><br><span class="line">	List&lt;Transaction&gt; transactionsForCurrency = </span><br><span class="line">    transactionsByCurrencies.get(currency); </span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (transactionsForCurrency == <span class="keyword">null</span>){<span class="comment">//如果这个货币的分组Map是空的，就建立一个</span></span><br><span class="line">	transactionsForCurrency = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">	</span><br><span class="line">	transactionsByCurrencies.put(currency,transactionsForCurrency);</span><br><span class="line">	</span><br><span class="line">	}</span><br><span class="line">	transactionsForCurrency.add(transaction);<span class="comment">//将当前遍历的交易添加到具有同一货币的交易List中</span></span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">在Java8里面可以通过控制流操作：</span><br><span class="line">Map&lt;Currency,List&lt;Transaction&gt;&gt; transactionsByCurrencies = </span><br><span class="line">    transactions.stream()</span><br><span class="line">    			.filter((Transaction t) -&gt; t.getPrice() &gt; <span class="number">1000</span>)<span class="comment">//筛选金额较高的交易</span></span><br><span class="line">    			.collect(groupingBy(Transaction::getCurrency));<span class="comment">//按货币分组</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">在Java8里面可以通过控制流操作：</span><br><span class="line">Map&lt;Currency,List&lt;Transaction&gt;&gt; transactionsByCurrencies = </span><br><span class="line">    transactions.stream()</span><br><span class="line">    			.filter((Transaction t) -&gt; t.getPrice() &gt; <span class="number">1000</span>)<span class="comment">//筛选金额较高的交易</span></span><br><span class="line">    			.collect(groupingBy(Transaction::getCurrency));<span class="comment">//按货币分组</span></span><br></pre></td></tr></tbody></table></figure>
 
 <p>很显然，通过流的操作减少了繁多的代码；在<code>Java8</code>这段代码中，所运用到了<code>Lambda</code>表达式匿名内部类实现了筛选金额这一部分功能，然后通过集合collect进行分组，其中<code>Transaction::getCurrency</code>的意思是按照Transaction类中getCurrency拿到的种类进行分组。</p>
-
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
     </article>
     <!-- license  -->
     
@@ -832,9 +850,24 @@ top:35vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 18
+        Total : 19
         </div>
         <!-- search  -->
         
@@ -847,6 +880,11 @@ top:35vh;
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/10</span><a class="archive-post-title" href= "/2020/03/10/SpringBoot启动详解/" >原来如此:SpringBoot启动详解</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -962,31 +1000,33 @@ top:35vh;
     
         <span class="sidebar-tag-name" data-tags="IO流"><span class="iconfont-archer">&#xe606;</span>IO流</span>
     
+        <span class="sidebar-tag-name" data-tags="基础知识总结"><span class="iconfont-archer">&#xe606;</span>基础知识总结</span>
+    
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="装箱数据"><span class="iconfont-archer">&#xe606;</span>装箱数据</span>
     
         <span class="sidebar-tag-name" data-tags="线程池"><span class="iconfont-archer">&#xe606;</span>线程池</span>
     
+        <span class="sidebar-tag-name" data-tags="SpringBoot"><span class="iconfont-archer">&#xe606;</span>SpringBoot</span>
+    
         <span class="sidebar-tag-name" data-tags="LeetCode"><span class="iconfont-archer">&#xe606;</span>LeetCode</span>
-    
-        <span class="sidebar-tag-name" data-tags="基础知识总结"><span class="iconfont-archer">&#xe606;</span>基础知识总结</span>
-    
-        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
-    
-        <span class="sidebar-tag-name" data-tags="VUE"><span class="iconfont-archer">&#xe606;</span>VUE</span>
-    
-        <span class="sidebar-tag-name" data-tags="String原理"><span class="iconfont-archer">&#xe606;</span>String原理</span>
-    
-        <span class="sidebar-tag-name" data-tags="面向对象"><span class="iconfont-archer">&#xe606;</span>面向对象</span>
     
         <span class="sidebar-tag-name" data-tags="Hugo"><span class="iconfont-archer">&#xe606;</span>Hugo</span>
     
         <span class="sidebar-tag-name" data-tags="博客"><span class="iconfont-archer">&#xe606;</span>博客</span>
     
+        <span class="sidebar-tag-name" data-tags="String原理"><span class="iconfont-archer">&#xe606;</span>String原理</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="VUE"><span class="iconfont-archer">&#xe606;</span>VUE</span>
+    
         <span class="sidebar-tag-name" data-tags="算法"><span class="iconfont-archer">&#xe606;</span>算法</span>
     
         <span class="sidebar-tag-name" data-tags="排序"><span class="iconfont-archer">&#xe606;</span>排序</span>
+    
+        <span class="sidebar-tag-name" data-tags="面向对象"><span class="iconfont-archer">&#xe606;</span>面向对象</span>
     
         <span class="sidebar-tag-name" data-tags="集合体系"><span class="iconfont-archer">&#xe606;</span>集合体系</span>
     
@@ -1029,15 +1069,17 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
     
+        <span class="sidebar-category-name" data-categories="原来如此"><span class="iconfont-archer">&#xe60a;</span>原来如此</span>
+    
         <span class="sidebar-category-name" data-categories="基础算法"><span class="iconfont-archer">&#xe60a;</span>基础算法</span>
-    
-        <span class="sidebar-category-name" data-categories="Java泛型"><span class="iconfont-archer">&#xe60a;</span>Java泛型</span>
-    
-        <span class="sidebar-category-name" data-categories="项目实战"><span class="iconfont-archer">&#xe60a;</span>项目实战</span>
     
         <span class="sidebar-category-name" data-categories="博客搭建"><span class="iconfont-archer">&#xe60a;</span>博客搭建</span>
     
+        <span class="sidebar-category-name" data-categories="项目实战"><span class="iconfont-archer">&#xe60a;</span>项目实战</span>
+    
         <span class="sidebar-category-name" data-categories="算法"><span class="iconfont-archer">&#xe60a;</span>算法</span>
+    
+        <span class="sidebar-category-name" data-categories="Java泛型"><span class="iconfont-archer">&#xe60a;</span>Java泛型</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>

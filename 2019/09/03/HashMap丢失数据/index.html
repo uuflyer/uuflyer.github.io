@@ -274,7 +274,7 @@ height:35vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">422</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">460</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -407,7 +407,7 @@ height:35vh;
 <p>参考: <a href="https://xinxingastro.github.io/2018/05/11/Java/HashMap%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" target="_blank" rel="noopener">HashMap底层实现原理</a></p>
 </blockquote>
 <h3 id="HashMap丢失数据问题"><a href="#HashMap丢失数据问题" class="headerlink" title="HashMap丢失数据问题"></a>HashMap丢失数据问题</h3><p>最近在学习使用HashMap，多次调用创建的<code>HashMap</code>对象时出现数据丢失的异常情况，导致统计计算数据不一致。代码如下:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Map&lt;Character, Integer&gt; charCount = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="title">CharCount</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); ++i) &#123;</span><br><span class="line">         <span class="keyword">char</span> ch = s.charAt(i);</span><br><span class="line">         <span class="keyword">if</span> (charCount.containsKey(ch)) &#123;</span><br><span class="line">             charCount.put(ch, charCount.get(ch) + <span class="number">1</span>);</span><br><span class="line">         &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">             charCount.put(ch, <span class="number">1</span>);</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">count</span><span class="params">(<span class="keyword">char</span> ch)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">return</span> charCount.getOrDefault(ch, <span class="number">0</span>);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 我到底包含哪些字符？</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@return</span> 包含的所有字符集合</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> Set&lt;Character&gt; <span class="title">chars</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     <span class="keyword">return</span> charCount.keySet();</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 我和另外一个CharCount有多少个公共字符？ 例如，aabbcc和abcdef有3个公共字符: a/b/c，因此返回3</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">howManyCharsInCommon</span><span class="params">(CharCount anotherCharCount)</span> </span>&#123;</span><br><span class="line">     Set&lt;Character&gt; myChars = chars();</span><br><span class="line">     Set&lt;Character&gt; theirChars = anotherCharCount.chars();</span><br><span class="line"></span><br><span class="line">     theirChars.retainAll(myChars);</span><br><span class="line">     <span class="keyword">return</span> theirChars.size();</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Map&lt;Character, Integer&gt; charCount = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="title">CharCount</span><span class="params">(String s)</span> </span>{</span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); ++i) {</span><br><span class="line">         <span class="keyword">char</span> ch = s.charAt(i);</span><br><span class="line">         <span class="keyword">if</span> (charCount.containsKey(ch)) {</span><br><span class="line">             charCount.put(ch, charCount.get(ch) + <span class="number">1</span>);</span><br><span class="line">         } <span class="keyword">else</span> {</span><br><span class="line">             charCount.put(ch, <span class="number">1</span>);</span><br><span class="line">         }</span><br><span class="line">     }</span><br><span class="line"> }</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">count</span><span class="params">(<span class="keyword">char</span> ch)</span> </span>{</span><br><span class="line">     <span class="keyword">return</span> charCount.getOrDefault(ch, <span class="number">0</span>);</span><br><span class="line"> }</span><br><span class="line"></span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 我到底包含哪些字符？</span></span><br><span class="line"><span class="comment">  *</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@return</span> 包含的所有字符集合</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> Set&lt;Character&gt; <span class="title">chars</span><span class="params">()</span> </span>{</span><br><span class="line">     <span class="keyword">return</span> charCount.keySet();</span><br><span class="line"> }</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 我和另外一个CharCount有多少个公共字符？ 例如，aabbcc和abcdef有3个公共字符: a/b/c，因此返回3</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">howManyCharsInCommon</span><span class="params">(CharCount anotherCharCount)</span> </span>{</span><br><span class="line">     Set&lt;Character&gt; myChars = chars();</span><br><span class="line">     Set&lt;Character&gt; theirChars = anotherCharCount.chars();</span><br><span class="line"></span><br><span class="line">     theirChars.retainAll(myChars);</span><br><span class="line">     <span class="keyword">return</span> theirChars.size();</span><br><span class="line"> }</span><br></pre></td></tr></tbody></table></figure>
 
 <p>这个问题的出现是因为HashMap的线程不安全性导致的：</p>
 <ul>
@@ -421,7 +421,25 @@ height:35vh;
 <ul>
 <li>其实HashMap还存在再扩容的时候有可能会变成一个死循环链表，参考 <a href="https://coolshell.cn/articles/9606.html" target="_blank" rel="noopener">疫苗:JAVA HASHMAP的死循环</a></li>
 </ul>
-
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
     </article>
     <!-- license  -->
     
@@ -772,9 +790,24 @@ top:35vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 18
+        Total : 19
         </div>
         <!-- search  -->
         
@@ -787,6 +820,11 @@ top:35vh;
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/10</span><a class="archive-post-title" href= "/2020/03/10/SpringBoot启动详解/" >原来如此:SpringBoot启动详解</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -902,31 +940,33 @@ top:35vh;
     
         <span class="sidebar-tag-name" data-tags="IO流"><span class="iconfont-archer">&#xe606;</span>IO流</span>
     
+        <span class="sidebar-tag-name" data-tags="基础知识总结"><span class="iconfont-archer">&#xe606;</span>基础知识总结</span>
+    
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="装箱数据"><span class="iconfont-archer">&#xe606;</span>装箱数据</span>
     
         <span class="sidebar-tag-name" data-tags="线程池"><span class="iconfont-archer">&#xe606;</span>线程池</span>
     
+        <span class="sidebar-tag-name" data-tags="SpringBoot"><span class="iconfont-archer">&#xe606;</span>SpringBoot</span>
+    
         <span class="sidebar-tag-name" data-tags="LeetCode"><span class="iconfont-archer">&#xe606;</span>LeetCode</span>
-    
-        <span class="sidebar-tag-name" data-tags="基础知识总结"><span class="iconfont-archer">&#xe606;</span>基础知识总结</span>
-    
-        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
-    
-        <span class="sidebar-tag-name" data-tags="VUE"><span class="iconfont-archer">&#xe606;</span>VUE</span>
-    
-        <span class="sidebar-tag-name" data-tags="String原理"><span class="iconfont-archer">&#xe606;</span>String原理</span>
-    
-        <span class="sidebar-tag-name" data-tags="面向对象"><span class="iconfont-archer">&#xe606;</span>面向对象</span>
     
         <span class="sidebar-tag-name" data-tags="Hugo"><span class="iconfont-archer">&#xe606;</span>Hugo</span>
     
         <span class="sidebar-tag-name" data-tags="博客"><span class="iconfont-archer">&#xe606;</span>博客</span>
     
+        <span class="sidebar-tag-name" data-tags="String原理"><span class="iconfont-archer">&#xe606;</span>String原理</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="VUE"><span class="iconfont-archer">&#xe606;</span>VUE</span>
+    
         <span class="sidebar-tag-name" data-tags="算法"><span class="iconfont-archer">&#xe606;</span>算法</span>
     
         <span class="sidebar-tag-name" data-tags="排序"><span class="iconfont-archer">&#xe606;</span>排序</span>
+    
+        <span class="sidebar-tag-name" data-tags="面向对象"><span class="iconfont-archer">&#xe606;</span>面向对象</span>
     
         <span class="sidebar-tag-name" data-tags="集合体系"><span class="iconfont-archer">&#xe606;</span>集合体系</span>
     
@@ -969,15 +1009,17 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
     
+        <span class="sidebar-category-name" data-categories="原来如此"><span class="iconfont-archer">&#xe60a;</span>原来如此</span>
+    
         <span class="sidebar-category-name" data-categories="基础算法"><span class="iconfont-archer">&#xe60a;</span>基础算法</span>
-    
-        <span class="sidebar-category-name" data-categories="Java泛型"><span class="iconfont-archer">&#xe60a;</span>Java泛型</span>
-    
-        <span class="sidebar-category-name" data-categories="项目实战"><span class="iconfont-archer">&#xe60a;</span>项目实战</span>
     
         <span class="sidebar-category-name" data-categories="博客搭建"><span class="iconfont-archer">&#xe60a;</span>博客搭建</span>
     
+        <span class="sidebar-category-name" data-categories="项目实战"><span class="iconfont-archer">&#xe60a;</span>项目实战</span>
+    
         <span class="sidebar-category-name" data-categories="算法"><span class="iconfont-archer">&#xe60a;</span>算法</span>
+    
+        <span class="sidebar-category-name" data-categories="Java泛型"><span class="iconfont-archer">&#xe60a;</span>Java泛型</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>

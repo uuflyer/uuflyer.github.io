@@ -419,16 +419,16 @@ height:35vh;
 <li>LinkedList主要用于新增和删除操作</li>
 </ul>
 <h5 id="1-1-ArrayList、Vector和Stack"><a href="#1-1-ArrayList、Vector和Stack" class="headerlink" title="1.1 ArrayList、Vector和Stack"></a>1.1 ArrayList、Vector和Stack</h5><p>ArrayList的底层实现是使用对象数组存储元素，如果使用默认构造函数则会将该数组赋值为一个代表空的数组EMPTY_ELEMENTDATA，另外需要使用一个size记录该数组中实际存储的元素个数，而默认大小DEFAULT_CAPACITY是仅在扩展数组时使用的数组大小的最小值</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_CAPACITY = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] EMPTY_ELEMENTDATA = &#123;&#125;;</span><br><span class="line"><span class="keyword">transient</span> Object[] elementData;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> size;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_CAPACITY = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] EMPTY_ELEMENTDATA = {};</span><br><span class="line"><span class="keyword">transient</span> Object[] elementData;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> size;</span><br></pre></td></tr></tbody></table></figure>
 
 <p>ArrayList扩展数字容量时是至少增加现有的容量的一半</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> oldCapacity = elementData.length;</span><br><span class="line"><span class="keyword">int</span> newCapacity = oldCapacity + (oldCapacity &gt;&gt; <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> oldCapacity = elementData.length;</span><br><span class="line"><span class="keyword">int</span> newCapacity = oldCapacity + (oldCapacity &gt;&gt; <span class="number">1</span>);</span><br></pre></td></tr></tbody></table></figure>
 
 <p>Vector的底层也是使用的对象数组存储元素，使用了一个elementCount记录实际存储的元素个数，还有Vector扩展数组时使用的一个增量capacityIncrement，如果使用默认构造器则扩展增量大小为10。与ArrayList不同的是，Vector内部的功能方法都使用了<code>synchronized</code>关键字进行同步。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> Object[] elementData;</span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">int</span> elementCount;</span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">int</span> capacityIncrement;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> Object[] elementData;</span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">int</span> elementCount;</span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">int</span> capacityIncrement;</span><br></pre></td></tr></tbody></table></figure>
 
 <p>Vector扩展数组时，如果扩展增量capacityIncrement不大于0，则对原有容量加倍扩展；否则按照增量扩展</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> oldCapacity = elementData.length;</span><br><span class="line"><span class="keyword">int</span> newCapacity = oldCapacity + ((capacityIncrement &gt; <span class="number">0</span>) ?</span><br><span class="line">                                         capacityIncrement : oldCapacity);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> oldCapacity = elementData.length;</span><br><span class="line"><span class="keyword">int</span> newCapacity = oldCapacity + ((capacityIncrement &gt; <span class="number">0</span>) ?</span><br><span class="line">                                         capacityIncrement : oldCapacity);</span><br></pre></td></tr></tbody></table></figure>
 
 <p>Stack继承自Vector，添加了五个方法实现后进先出栈，Stack也是线程安全的</p>
 <table>
@@ -460,10 +460,10 @@ height:35vh;
 </tr>
 </tbody></table>
 <h5 id="1-2-LinkedList"><a href="#1-2-LinkedList" class="headerlink" title="1.2 LinkedList"></a>1.2 LinkedList</h5><p>LinkedList继承自AbstractSequentialList，而AbstractSequentialList继承自AbstractList，提供了一些序列化访问式列表的默认实现。LinkedList底层实现是使用了一个双向链表，分别用first和last记录表头和表尾，并使用了size记录元素个数</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">transient</span> <span class="keyword">int</span> size = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">transient</span> Node&lt;E&gt; first;</span><br><span class="line"><span class="keyword">transient</span> Node&lt;E&gt; last;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">transient</span> <span class="keyword">int</span> size = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">transient</span> Node&lt;E&gt; first;</span><br><span class="line"><span class="keyword">transient</span> Node&lt;E&gt; last;</span><br></pre></td></tr></tbody></table></figure>
 
 <p>Node的定义很简单，存储元素以及前后指针</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">       E item;</span><br><span class="line">       Node&lt;E&gt; next;</span><br><span class="line">       Node&lt;E&gt; prev;</span><br><span class="line"></span><br><span class="line">       Node(Node&lt;E&gt; prev, E element, Node&lt;E&gt; next) &#123;</span><br><span class="line">           <span class="keyword">this</span>.item = element;</span><br><span class="line">           <span class="keyword">this</span>.next = next;</span><br><span class="line">           <span class="keyword">this</span>.prev = prev;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">E</span>&gt; </span>{</span><br><span class="line">       E item;</span><br><span class="line">       Node&lt;E&gt; next;</span><br><span class="line">       Node&lt;E&gt; prev;</span><br><span class="line"></span><br><span class="line">       Node(Node&lt;E&gt; prev, E element, Node&lt;E&gt; next) {</span><br><span class="line">           <span class="keyword">this</span>.item = element;</span><br><span class="line">           <span class="keyword">this</span>.next = next;</span><br><span class="line">           <span class="keyword">this</span>.prev = prev;</span><br><span class="line">       }</span><br><span class="line">   }</span><br></pre></td></tr></tbody></table></figure>
 
 <p>LinkedList继承图：</p>
 <p><img src="/2019/10/21/详解集合体系/LinkedList%E7%BB%A7%E6%89%BF%E5%9B%BE.png" alt="LinkedList继承图"></p>
@@ -480,7 +480,7 @@ height:35vh;
 <p><strong>优先队列的作用是能保证每次取出的元素都是队列中权值最小的</strong>（Java的优先队列每次取最小元素，C++的优先队列每次取最大元素）。这里牵涉到了大小关系，<strong>元素大小的评判可以通过元素本身的自然顺序（natural ordering），也可以通过构造时传入的比较器</strong>（Comparator）。</p>
 <p>PriorityQueue通过二叉小顶堆实现（任意一个非叶子节点的权值，都不大于其左右子节点的权值），可以用一棵完全二叉树表示，也就意味着可以通过数组来作为PriorityQueue的底层实现。</p>
 <p>PriorityQueue扩展容量大小，如果初始容量比较小（小于64）则进行倍增；否则就增长50%的容量大小</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> newCapacity = oldCapacity + ((oldCapacity &lt; <span class="number">64</span>) ?</span><br><span class="line">                                         (oldCapacity + <span class="number">2</span>) :</span><br><span class="line">                                         (oldCapacity &gt;&gt; <span class="number">1</span>));</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> newCapacity = oldCapacity + ((oldCapacity &lt; <span class="number">64</span>) ?</span><br><span class="line">                                         (oldCapacity + <span class="number">2</span>) :</span><br><span class="line">                                         (oldCapacity &gt;&gt; <span class="number">1</span>));</span><br></pre></td></tr></tbody></table></figure>
 
 <p><a href="https://www.cnblogs.com/CarpenterLee/p/5488070.html" target="_blank" rel="noopener">这里有一篇详细介绍PriorityQueue方法的文章</a></p>
 <h4 id="3-Set"><a href="#3-Set" class="headerlink" title="3. Set"></a>3. Set</h4><p>Set的主要特性是用于存储无序(存入和取出的顺序不一定相同)元素，值不能重复。</p>
@@ -488,7 +488,7 @@ height:35vh;
 <p><strong>如何来保证元素唯一性?</strong><br>依赖两个方法：hashCode()和equals()</p>
 <p>HashSet判断元素相等方法时，首先判断两个对象的HashCode是否相等，如果不相等，则认为两个对象也不相等，如果相等再判断equals方法是否相等；如果hashCode相等，equals方法不相等，则认为时不同的对象；为什么这样做，主要是为了提高效率，HashCode的效率比equals效率更高，不必每次重新计算Hash值.</p>
 <p>HashSet中添加元素调用add方法，然后会调用HashMap的put方法插入元素，HashMap的put方法插入元素时，会首先判断是否存在key，如果不存在，则插入这个key-value,若存在,则修改value值；在set中，value值没用，因此往HashSet中添加元素，首先判断key是否存在，不存在插入元素，存在则不做处理。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//HashSet内部由HashMap实现</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">transient</span> HashMap&lt;E,Object&gt; map;</span><br><span class="line"><span class="comment">//构造器给map创建新的HashMap集合</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashSet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//添加元素方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> map.put(e, PRESENT)==<span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//HashSet内部由HashMap实现</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">transient</span> HashMap&lt;E,Object&gt; map;</span><br><span class="line"><span class="comment">//构造器给map创建新的HashMap集合</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashSet</span><span class="params">()</span> </span>{</span><br><span class="line">        map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    }</span><br><span class="line"><span class="comment">//添加元素方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>{</span><br><span class="line">        <span class="keyword">return</span> map.put(e, PRESENT)==<span class="keyword">null</span>;</span><br><span class="line">    }</span><br></pre></td></tr></tbody></table></figure>
 
 <h5 id="3-2-LinkedHashSet"><a href="#3-2-LinkedHashSet" class="headerlink" title="3.2 LinkedHashSet"></a>3.2 LinkedHashSet</h5><p>linkedHashSet继承自HashSet，同时使用链表来维护元素的顺序，元素以插入的顺序进行访问；在性能上略低于HashSet,但在迭代访问时有很好的性能；</p>
 <h5 id="3-3-TreeSet"><a href="#3-3-TreeSet" class="headerlink" title="3.3 TreeSet"></a>3.3 TreeSet</h5><p>基于SortedSet，底层实现是通过二叉树，插入的元素要实现Comparable接口。</p>
@@ -508,15 +508,33 @@ height:35vh;
 <h5 id="4-1-HashMap"><a href="#4-1-HashMap" class="headerlink" title="4.1 HashMap"></a>4.1 HashMap</h5><p>最常用的Map,它根据键的HashCode 值存储数据,根据键可以直接获取它的值，具有很快的访问速度。HashMap最多只允许一条记录的键为Null(多条会覆盖);允许多条记录的值为 Null；但HashMap是非线程安全的。</p>
 <p>HashMap中是根据键的HashCode 值存储在不同的Hash桶内部，这样有利于数据的访问与查找；在Hash桶内部数据是以链式存储的，因为存在一条规则是不同的对象可以有相同的Hashcode，所以一个Hash桶内可能存储几个数据，这就是Hash桶碰撞。</p>
 <p>在<code>Java7</code>之前可能存在一些特定的数据的Hash值都相同，所以全都拥挤在一个桶内，就变成了链表类型，查询效率大打折扣；在<code>Java8</code>对其进行了改进，当桶内的数据个数超过一定阈值，就将这些数据转换成红黑树（均匀二叉树）数据类型存储。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_INITIAL_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">4</span>;<span class="comment">//默认初始大小为16</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAXIMUM_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">30</span>;<span class="comment">//最大值为2^30</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">float</span> DEFAULT_LOAD_FACTOR = <span class="number">0.75f</span>;<span class="comment">//默认加载因子，主要作用于当前HashMap容量使用超过这个阈值之后，进行扩容；0.75f表示已使用空间超过当前容量的75%就进行扩容</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TREEIFY_THRESHOLD = <span class="number">8</span>;<span class="comment">//转换成红黑树的阈值，当Hash桶内数量超过8个时，就将其转换为红黑树类型存储</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> UNTREEIFY_THRESHOLD = <span class="number">6</span>;<span class="comment">//反树化的阈值，当桶内数据个数小于6时，将红黑树类型转化为链式存储</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Hash桶内存放的数据类型</span></span><br><span class="line">Node(<span class="keyword">int</span> hash, K key, V value, Node&lt;K,V&gt; next) &#123;</span><br><span class="line">            <span class="keyword">this</span>.hash = hash;</span><br><span class="line">            <span class="keyword">this</span>.key = key;</span><br><span class="line">            <span class="keyword">this</span>.value = value;</span><br><span class="line">            <span class="keyword">this</span>.next = next;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_INITIAL_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">4</span>;<span class="comment">//默认初始大小为16</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAXIMUM_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">30</span>;<span class="comment">//最大值为2^30</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">float</span> DEFAULT_LOAD_FACTOR = <span class="number">0.75f</span>;<span class="comment">//默认加载因子，主要作用于当前HashMap容量使用超过这个阈值之后，进行扩容；0.75f表示已使用空间超过当前容量的75%就进行扩容</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TREEIFY_THRESHOLD = <span class="number">8</span>;<span class="comment">//转换成红黑树的阈值，当Hash桶内数量超过8个时，就将其转换为红黑树类型存储</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> UNTREEIFY_THRESHOLD = <span class="number">6</span>;<span class="comment">//反树化的阈值，当桶内数据个数小于6时，将红黑树类型转化为链式存储</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Hash桶内存放的数据类型</span></span><br><span class="line">Node(<span class="keyword">int</span> hash, K key, V value, Node&lt;K,V&gt; next) {</span><br><span class="line">            <span class="keyword">this</span>.hash = hash;</span><br><span class="line">            <span class="keyword">this</span>.key = key;</span><br><span class="line">            <span class="keyword">this</span>.value = value;</span><br><span class="line">            <span class="keyword">this</span>.next = next;</span><br><span class="line">        }</span><br></pre></td></tr></tbody></table></figure>
 
 <p><strong>HashMap的扩容</strong>是先检测当前的容量是否已经是最大值了，如果不是，则创建新的空间比原来大一倍；然后再将原来的数据拷贝过去</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (oldCap &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (oldCap &gt;= MAXIMUM_CAPACITY) &#123;</span><br><span class="line">                threshold = Integer.MAX_VALUE;</span><br><span class="line">                <span class="keyword">return</span> oldTab;</span><br><span class="line">            &#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> ((newCap = oldCap &lt;&lt; <span class="number">1</span>) &lt; MAXIMUM_CAPACITY &amp;&amp;</span><br><span class="line">                     oldCap &gt;= DEFAULT_INITIAL_CAPACITY)</span><br><span class="line">                newThr = oldThr &lt;&lt; <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (oldCap &gt; <span class="number">0</span>) {</span><br><span class="line">            <span class="keyword">if</span> (oldCap &gt;= MAXIMUM_CAPACITY) {</span><br><span class="line">                threshold = Integer.MAX_VALUE;</span><br><span class="line">                <span class="keyword">return</span> oldTab;</span><br><span class="line">            }</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> ((newCap = oldCap &lt;&lt; <span class="number">1</span>) &lt; MAXIMUM_CAPACITY &amp;&amp;</span><br><span class="line">                     oldCap &gt;= DEFAULT_INITIAL_CAPACITY)</span><br><span class="line">                newThr = oldThr &lt;&lt; <span class="number">1</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <h5 id="4-2-TreeMap"><a href="#4-2-TreeMap" class="headerlink" title="4.2 TreeMap"></a>4.2 TreeMap</h5><p>能够把它保存的记录根据键(key)排序,默认是按升序排序，也可以指定排序的比较器，当用Iterator 遍历TreeMap时，得到的记录是排过序的。TreeMap不允许key的值为null。同样也是线程不安全的。</p>
 <h5 id="4-3-Hashtable"><a href="#4-3-Hashtable" class="headerlink" title="4.3 Hashtable"></a>4.3 Hashtable</h5><p>与 HashMap类似,不同的是key和value的值均不允许为null;它支持线程的同步，即任一时刻只有一个线程能写Hashtable,因此也导致了Hashtale在写入时会比较慢。 </p>
 <h5 id="4-4-LinkedHashMap"><a href="#4-4-LinkedHashMap" class="headerlink" title="4.4 LinkedHashMap"></a>4.4 LinkedHashMap</h5><p>保存了记录的插入顺序，在用Iterator遍历LinkedHashMap时，先得到的记录肯定是先插入的。在遍历的时候会比HashMap慢，key和value均允许为空，非同步的。 </p>
-
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
     </article>
     <!-- license  -->
     
@@ -867,9 +885,24 @@ top:35vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 18
+        Total : 19
         </div>
         <!-- search  -->
         
@@ -882,6 +915,11 @@ top:35vh;
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/10</span><a class="archive-post-title" href= "/2020/03/10/SpringBoot启动详解/" >原来如此:SpringBoot启动详解</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -997,31 +1035,33 @@ top:35vh;
     
         <span class="sidebar-tag-name" data-tags="IO流"><span class="iconfont-archer">&#xe606;</span>IO流</span>
     
+        <span class="sidebar-tag-name" data-tags="基础知识总结"><span class="iconfont-archer">&#xe606;</span>基础知识总结</span>
+    
         <span class="sidebar-tag-name" data-tags="多线程"><span class="iconfont-archer">&#xe606;</span>多线程</span>
     
         <span class="sidebar-tag-name" data-tags="装箱数据"><span class="iconfont-archer">&#xe606;</span>装箱数据</span>
     
         <span class="sidebar-tag-name" data-tags="线程池"><span class="iconfont-archer">&#xe606;</span>线程池</span>
     
+        <span class="sidebar-tag-name" data-tags="SpringBoot"><span class="iconfont-archer">&#xe606;</span>SpringBoot</span>
+    
         <span class="sidebar-tag-name" data-tags="LeetCode"><span class="iconfont-archer">&#xe606;</span>LeetCode</span>
-    
-        <span class="sidebar-tag-name" data-tags="基础知识总结"><span class="iconfont-archer">&#xe606;</span>基础知识总结</span>
-    
-        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
-    
-        <span class="sidebar-tag-name" data-tags="VUE"><span class="iconfont-archer">&#xe606;</span>VUE</span>
-    
-        <span class="sidebar-tag-name" data-tags="String原理"><span class="iconfont-archer">&#xe606;</span>String原理</span>
-    
-        <span class="sidebar-tag-name" data-tags="面向对象"><span class="iconfont-archer">&#xe606;</span>面向对象</span>
     
         <span class="sidebar-tag-name" data-tags="Hugo"><span class="iconfont-archer">&#xe606;</span>Hugo</span>
     
         <span class="sidebar-tag-name" data-tags="博客"><span class="iconfont-archer">&#xe606;</span>博客</span>
     
+        <span class="sidebar-tag-name" data-tags="String原理"><span class="iconfont-archer">&#xe606;</span>String原理</span>
+    
+        <span class="sidebar-tag-name" data-tags="Java"><span class="iconfont-archer">&#xe606;</span>Java</span>
+    
+        <span class="sidebar-tag-name" data-tags="VUE"><span class="iconfont-archer">&#xe606;</span>VUE</span>
+    
         <span class="sidebar-tag-name" data-tags="算法"><span class="iconfont-archer">&#xe606;</span>算法</span>
     
         <span class="sidebar-tag-name" data-tags="排序"><span class="iconfont-archer">&#xe606;</span>排序</span>
+    
+        <span class="sidebar-tag-name" data-tags="面向对象"><span class="iconfont-archer">&#xe606;</span>面向对象</span>
     
         <span class="sidebar-tag-name" data-tags="集合体系"><span class="iconfont-archer">&#xe606;</span>集合体系</span>
     
@@ -1064,15 +1104,17 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="Java"><span class="iconfont-archer">&#xe60a;</span>Java</span>
     
+        <span class="sidebar-category-name" data-categories="原来如此"><span class="iconfont-archer">&#xe60a;</span>原来如此</span>
+    
         <span class="sidebar-category-name" data-categories="基础算法"><span class="iconfont-archer">&#xe60a;</span>基础算法</span>
-    
-        <span class="sidebar-category-name" data-categories="Java泛型"><span class="iconfont-archer">&#xe60a;</span>Java泛型</span>
-    
-        <span class="sidebar-category-name" data-categories="项目实战"><span class="iconfont-archer">&#xe60a;</span>项目实战</span>
     
         <span class="sidebar-category-name" data-categories="博客搭建"><span class="iconfont-archer">&#xe60a;</span>博客搭建</span>
     
+        <span class="sidebar-category-name" data-categories="项目实战"><span class="iconfont-archer">&#xe60a;</span>项目实战</span>
+    
         <span class="sidebar-category-name" data-categories="算法"><span class="iconfont-archer">&#xe60a;</span>算法</span>
+    
+        <span class="sidebar-category-name" data-categories="Java泛型"><span class="iconfont-archer">&#xe60a;</span>Java泛型</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
