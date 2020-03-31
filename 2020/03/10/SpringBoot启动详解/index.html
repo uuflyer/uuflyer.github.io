@@ -474,6 +474,8 @@ height:35vh;
 <p>该配置模块的主要使用到了SpringFactoriesLoader，即Spring工厂加载器，该对象提供了loadFactoryNames方法，入参为factoryClass和classLoader，即需要传入上图中的工厂类名称和对应的类加载器，方法会根据指定的classLoader，加载该类加器搜索路径下的指定文件，即spring.factories文件，传入的工厂类为接口，而文件中对应的类则是接口的实现类，或最终作为实现类。</p>
 <p>获取到这些实现类的类名后，loadFactoryNames方法返回类名集合，方法调用方得到这些集合后，再通过反射获取这些类的类对象、构造方法，最终生成实例 </p>
 <p>mybatis-spring-boot-starter、spring-boot-starter-web等组件的META-INF文件下均含有spring.factories文件，自动配置模块中，SpringFactoriesLoader收集到文件中的类全名并返回一个类全名的数组，返回的类全名通过反射被实例化，就形成了具体的工厂实例，工厂实例来生成组件具体需要的bean。 </p>
+<p> 下图有助于我们形象理解自动配置流程 </p>
+<p><img src="/2020/03/10/SpringBoot启动详解/%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E6%A8%A1%E5%9D%97.png" alt="自动配置模块"></p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -500,7 +502,7 @@ height:35vh;
             <p>原文作者：<a href="http://uuflyer.github.io">Kissu</a>
             <p>原文链接：<a href="http://uuflyer.github.io/2020/03/10/SpringBoot启动详解/">http://uuflyer.github.io/2020/03/10/SpringBoot启动详解/</a>
             <p>发表日期：<a href="http://uuflyer.github.io/2020/03/10/SpringBoot启动详解/">March 10th 2020, 1:47:00 am</a>
-            <p>更新日期：<a href="http://uuflyer.github.io/2020/03/10/SpringBoot启动详解/">March 20th 2020, 2:47:58 pm</a>
+            <p>更新日期：<a href="http://uuflyer.github.io/2020/03/10/SpringBoot启动详解/">March 20th 2020, 7:03:58 pm</a>
             <p>版权声明：本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
